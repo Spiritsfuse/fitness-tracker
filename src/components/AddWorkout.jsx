@@ -64,6 +64,7 @@ export default function AddWorkout({ addNewWorkout }) {
 
   return (
     <>
+      {/* Floating Add Workout Button */}
       <button
         onClick={() => setOpen(true)}
         className="add-workout-btn shadow-lg"
@@ -75,6 +76,7 @@ export default function AddWorkout({ addNewWorkout }) {
       >
         <FaPlus size={28} />
       </button>
+      {/* Modal for Add Workout Form */}
       {open && (
         <div className="add-modal-bg">
           <form
@@ -85,6 +87,7 @@ export default function AddWorkout({ addNewWorkout }) {
               border: "2px solid #7c3aed",
             }}
           >
+            {/* Modal Header with Title and Close Button */}
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-xl font-bold text-primary">
                 Add New Workout
@@ -98,7 +101,9 @@ export default function AddWorkout({ addNewWorkout }) {
                 <FaTimes size={20} />
               </button>
             </div>
+            {/* Workout Form Fields */}
             <div className="grid grid-cols-1 gap-3">
+              {/* Category Dropdown */}
               <select
                 name="category"
                 value={form.category}
@@ -114,6 +119,7 @@ export default function AddWorkout({ addNewWorkout }) {
                   </option>
                 ))}
               </select>
+              {/* Workout Name */}
               <input
                 name="workoutName"
                 type="text"
@@ -124,6 +130,7 @@ export default function AddWorkout({ addNewWorkout }) {
                 required
                 aria-label="Workout Name"
               />
+              {/* Sets and Reps */}
               <div className="flex gap-2">
                 <input
                   name="sets"
@@ -148,6 +155,7 @@ export default function AddWorkout({ addNewWorkout }) {
                   aria-label="Reps"
                 />
               </div>
+              {/* Weight and Duration */}
               <div className="flex gap-2">
                 <input
                   name="weight"
@@ -173,6 +181,7 @@ export default function AddWorkout({ addNewWorkout }) {
                 />
               </div>
             </div>
+            {/* Submit Button */}
             <button
               type="submit"
               className="mt-4 w-full bg-gradient-to-r from-primary to-secondary text-white py-2 rounded-lg font-bold hover:bg-accent transition"

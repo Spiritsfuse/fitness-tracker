@@ -54,8 +54,8 @@ function Calendar({ selectedDate, onSelect, workoutDates }) {
         </button>
       </div>
       <div className="calendar-days">
-        {["S", "M", "T", "W", "T", "F", "S"].map((d) => (
-          <div key={d}>{d}</div>
+        {["S", "M", "T", "W", "T", "F", "S"].map((d, i) => (
+          <div key={i}>{d}</div>
         ))}
       </div>
       <div className="calendar-dates">

@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="container flex items-center justify-between w-full">
         <Link to="/" className="logo flex items-center gap-2">
           <img
-            src="/src/assets/fitness-tracker-logo.png"
+            src="/fitness-tracker-logo.png"
             alt="Logo"
             className="h-10 w-10 max-w-[48px] max-h-[48px] rounded-full shadow-md border-2 border-accent animate-pulse object-cover"
           />
@@ -92,14 +92,15 @@ const Navbar = () => {
           />
           {/* Hamburger */}
           <button
-            className="lg:hidden ml-2 p-2 rounded-full bg-white/80 hover:bg-accent transition"
+            className="lg:hidden ml-2 p-3 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg border-2 border-accent focus:outline-none focus:ring-2 focus:ring-accent"
             onClick={() => setMobileOpen((prev) => !prev)}
             aria-label="Open navigation menu"
+            style={{ zIndex: 1001 }}
           >
             {mobileOpen ? (
-              <FaTimes className="text-2xl text-primary" />
+              <FaTimes className="text-3xl text-white" />
             ) : (
-              <FaBars className="text-2xl text-primary" />
+              <FaBars className="text-3xl text-white" />
             )}
           </button>
         </div>
@@ -107,49 +108,53 @@ const Navbar = () => {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex justify-end lg:hidden transition-all duration-300">
-          <div
-            className="w-72 max-w-full h-full bg-gradient-to-b from-primary/90 via-secondary/90 to-accent/90
-            shadow-2xl rounded-l-3xl p-8 flex flex-col gap-8 animate-slideInRight
-            border-l-4 border-accent/80 backdrop-blur-xl relative"
-          >
+        <div className="fixed inset-0 z-[1000] bg-black/70 backdrop-blur-sm flex flex-col justify-end lg:hidden transition-all duration-300">
+          <div className="w-full h-[70vh] bg-gradient-to-b from-primary via-secondary to-accent shadow-2xl rounded-t-3xl p-8 flex flex-col gap-8 animate-slideInRight border-t-4 border-accent/80 relative">
             <button
-              className="absolute top-4 right-4"
+              className="absolute top-4 right-4 bg-white/90 text-accent rounded-full p-3 shadow-lg border-2 border-accent focus:outline-none focus:ring-2 focus:ring-accent"
               onClick={() => setMobileOpen(false)}
               aria-label="Close navigation menu"
+              style={{ zIndex: 1001 }}
             >
-              <FaTimes className="text-3xl text-white hover:text-accent transition" />
+              <FaTimes className="text-3xl" />
             </button>
-            <div className="flex flex-col gap-6 mt-8">
+            <div className="flex flex-col gap-6 mt-12">
               {navLinks.map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   className={({ isActive }) =>
-                    `block px-6 py-4 rounded-2xl font-bold text-lg shadow-lg transition-all duration-200 ${
-                      isActive ? "active-tab" : "inactive-tab"
+                    `w-full text-center py-4 rounded-2xl font-bold text-xl shadow-lg transition-all duration-200 ${
+                      isActive
+                        ? "bg-white text-primary scale-105"
+                        : "bg-white/20 text-white hover:bg-white/40 hover:text-primary"
                     }`
                   }
+                  style={{
+                    letterSpacing: "0.04em",
+                  }}
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.label}
                 </NavLink>
               ))}
             </div>
-            <div className="flex items-center gap-2 mt-auto">
-              <span className="flex items-center justify-center bg-accent text-white font-bold rounded-full w-10 h-10 text-lg uppercase shadow-md">
+            <div className="flex items-center gap-3 mt-auto justify-center">
+              <span className="flex items-center justify-center bg-accent text-white font-bold rounded-full w-12 h-12 text-xl uppercase shadow-md">
                 {getInitials(fullName)}
               </span>
-              <FaSignOutAlt
+              <button
                 onClick={() => {
                   logout();
                   sessionStorage.removeItem("user_fullname");
                 }}
-                className="text-xl cursor-pointer hover:text-accent transition-transform duration-300 transform hover:scale-125"
+                className="bg-white/90 text-accent rounded-full p-3 shadow-lg border-2 border-accent hover:bg-accent hover:text-white transition"
                 title="Logout"
                 tabIndex={0}
                 aria-label="Logout"
-              />
+              >
+                <FaSignOutAlt className="text-2xl" />
+              </button>
             </div>
           </div>
         </div>

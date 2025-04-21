@@ -191,6 +191,8 @@ const Dashboard = () => {
                 height={180}
               />
             </div>
+            <br/>
+            <br/>
             <div style={{ height: 220 }}>
               <h3 className="text-lg font-semibold text-primary mb-2">
                 Workout Categories
