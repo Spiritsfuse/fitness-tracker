@@ -1,0 +1,1332 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+
+:root {
+  --primary: #4f46e5;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --background: #f3f4f6;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --white: #fff;
+  --error: #ef4444;
+  --navbar-height: 70px;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(120deg, #e0e7ff 0%, #f3f4f6 50%, #f0fdfa 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  transition: background 0.5s;
+}
+.dark {
+  background: linear-gradient(120deg, #232946 0%, #121629 100%);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Container */
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* Navbar */
+.navbar,
+.glassy-navbar {
+  width: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+  border-bottom: 3px solid var(--accent);
+  height: var(--navbar-height);
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+}
+
+.navbar .logo {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-shadow: 0 2px 8px #7c3aed44;
+  transition: transform 0.3s;
+}
+.navbar .logo:hover {
+  transform: scale(1.08) rotate(-2deg);
+  color: #f59e0b;
+}
+
+.navbar ul {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: 2rem;
+}
+
+.navbar li {
+  list-style: none;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  position: relative;
+  z-index: 1;
+}
+
+.navbar a.active,
+.navbar a:focus {
+  background: linear-gradient(90deg, #f59e0b 60%, #10b981 100%);
+  color: #232946;
+  box-shadow: 0 2px 12px #f59e0b33;
+  transform: scale(1.08) translateX(10px);
+}
+
+.navbar a:hover {
+  background: #fff;
+  color: #7c3aed;
+  transform: scale(1.08);
+}
+
+.navbar .darkmode-btn {
+  margin-left: 2rem;
+  margin-right: 1rem;
+  background: #fff;
+  color: #7c3aed;
+  border-radius: 50%;
+  padding: 0.7rem;
+  box-shadow: 0 2px 8px #10b98133;
+  transition: background 0.2s, color 0.2s;
+}
+.navbar .darkmode-btn:hover {
+  background: #f59e0b;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .navbar ul {
+    gap: 0.5rem;
+    margin-left: 0.5rem;
+  }
+  .navbar .darkmode-btn {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+}
+
+@keyframes navbarFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.main-content {
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 2.5rem 2rem 2rem 2rem;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.1);
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.dark .main-content {
+  background: rgba(35, 41, 70, 0.97);
+  color: #f4f4f4;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.3s;
+}
+.logo:hover {
+  transform: scale(1.08) rotate(-2deg);
+  color: var(--accent);
+}
+
+.navbar a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.navbar a:hover,
+.navbar .active {
+  background: var(--accent);
+  color: var(--primary);
+  transform: scale(1.08);
+}
+
+.navbar .text-sm {
+  color: var(--white);
+  opacity: 0.8;
+}
+
+.navbar .text-xl {
+  color: var(--accent);
+}
+
+.navbar .text-xl:hover {
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+  .main-content {
+    padding-top: 90px;
+  }
+}
+
+/* Form Styling (Signup/Signin) */
+.signin-form {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signin-form h2 {
+  font-size: 2rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.signin-form label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+}
+
+.signin-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--text-secondary);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.signin-form input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(107, 70, 193, 0.5);
+  outline: none;
+}
+
+.signin-form input.error {
+  border-color: var(--error);
+}
+
+.signin-form .error {
+  color: var(--error);
+  font-size: 0.875rem;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.signin-form button {
+  width: 100%;
+  padding: 12px;
+  background: var(--secondary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.signin-form button:hover {
+  background: #0d905d;
+  transform: scale(1.05);
+}
+
+.signin-form .signup-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.signin-form .signup-link a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signin-form .signup-link a:hover {
+  color: #4c2e8a;
+}
+
+/* Dashboard */
+.dashboard {
+  padding: 40px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
+}
+.card:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.18), 0 0 0 4px #f59e0b22;
+  background: rgba(245, 245, 255, 0.98);
+}
+
+.card h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+/* Add Workout Form */
+.add-workout {
+  margin-top: 20px;
+}
+
+.add-workout select,
+.add-workout input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--text-secondary);
+  border-radius: 8px;
+  background: var(--white);
+  transition: border-color 0.3s ease;
+}
+
+.add-workout select:focus,
+.add-workout input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.add-workout button {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.add-workout button:hover {
+  background: #0d905d;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in;
+}
+
+/* Spinner */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px 0;
+  }
+  .main-content {
+    padding-top: 90px;
+  }
+}
+
+/* Auth Form */
+.auth-bg {
+  background: linear-gradient(120deg, #7c3aed 0%, #f59e0b 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.auth-card {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15);
+  padding: 2.5rem 2rem;
+  max-width: 400px;
+  width: 100%;
+  border: 3px solid var(--accent);
+  animation: fadeIn 1.2s;
+}
+.auth-card h2 {
+  color: var(--primary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+.auth-card input:focus {
+  border: 2px solid var(--accent);
+  outline: none;
+}
+.auth-card button {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.auth-card button:hover {
+  background: var(--accent);
+  color: var(--primary);
+  transform: scale(1.04);
+}
+.auth-card .switch-link {
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.auth-card .switch-link:hover {
+  color: var(--accent);
+}
+
+/* Dashboard */
+.dashboard-header {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+  animation: fadeIn 1.2s;
+}
+.stats-cards {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stats-card {
+  background: linear-gradient(120deg, #f59e0b 0%, #10b981 100%);
+  color: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.12);
+  min-width: 220px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 6px solid var(--primary);
+  animation: fadeIn 1.2s;
+}
+.stats-card:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.18);
+  background: linear-gradient(120deg, #10b981 0%, #f59e0b 100%);
+  color: #fff;
+}
+.add-workout-btn {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.18);
+  cursor: pointer;
+  z-index: 100;
+  transition: background 0.2s, transform 0.2s;
+  animation: pulse 2.5s infinite;
+}
+.add-workout-btn:hover {
+  background: var(--accent);
+  color: var(--primary);
+  transform: scale(1.12) rotate(8deg);
+}
+
+/* Workout Card */
+.workout-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 6px solid var(--primary);
+  animation: fadeIn 1.2s;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
+}
+.workout-card:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.18);
+  background: rgba(245, 245, 255, 0.98);
+}
+.workout-card .category {
+  background: var(--secondary);
+  color: var(--white);
+  padding: 4px 14px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+.workout-card h3 {
+  color: var(--primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0.5rem 0;
+}
+.workout-card .details {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+.workout-card .meta {
+  display: flex;
+  gap: 1.5rem;
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+/* AddWorkout Modal */
+.add-modal-bg {
+  background: rgba(0, 0, 0, 0.55);
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.4s;
+}
+.add-modal-card {
+  background: linear-gradient(120deg, #f3f4f6 60%, #e0e7ff 100%);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+  padding: 2rem;
+  width: 95vw;
+  max-width: 420px;
+  animation: fadeIn 0.7s;
+  animation: pop 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+.dark .add-modal-card {
+  background: linear-gradient(120deg, #232946 60%, #232946 100%);
+  color: #f4f4f4;
+}
+.add-modal-card textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1.5px solid var(--primary);
+  padding: 1rem;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  min-height: 120px;
+  resize: none;
+  transition: border 0.2s;
+}
+.add-modal-card textarea:focus {
+  border: 2px solid var(--accent);
+  outline: none;
+}
+.add-modal-card button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.add-modal-card button:hover {
+  background: var(--accent);
+  color: var(--primary);
+  transform: scale(1.04);
+}
+
+/* Blogs & Tutorials */
+.blogs-grid,
+.tutorials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.blog-card,
+.tutorial-card {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
+  padding: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-left: 6px solid var(--accent);
+  animation: fadeIn 1.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
+}
+.blog-card:hover,
+.tutorial-card:hover {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.18);
+  background: rgba(245, 245, 255, 0.98);
+}
+.blog-card h2,
+.tutorial-card h2 {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.blog-card p,
+.tutorial-card p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.blog-card a,
+.tutorial-card a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.blog-card a:hover,
+.tutorial-card a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+.tutorial-card img {
+  width: 100%;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.08);
+}
+
+/* Contact */
+.contact-form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.1);
+  padding: 2rem;
+  max-width: 500px;
+  margin: 2rem auto;
+  border-left: 6px solid var(--secondary);
+  animation: fadeIn 1.2s;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
+}
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border 0.2s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border: 2px solid var(--accent);
+  outline: none;
+}
+.contact-form button {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+}
+.contact-form button:hover {
+  background: var(--accent);
+  color: var(--primary);
+  transform: scale(1.04);
+}
+
+/* --- Additions and Enhancements --- */
+
+/* 1. Body & Main Content: Vibrant Gradient & Glassmorphism */
+body {
+  background: linear-gradient(120deg, #e0e7ff 0%, #f3f4f6 50%, #f0fdfa 100%);
+  min-height: 100vh;
+  transition: background 0.5s;
+}
+.dark {
+  background: linear-gradient(120deg, #232946 0%, #121629 100%);
+}
+
+.main-content {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px) saturate(1.2);
+  border-radius: 2rem;
+  margin: 2rem auto;
+  padding: 2.5rem 1rem 2rem 1rem;
+  max-width: 1200px;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.1);
+  animation: fadeIn 1.2s;
+  transition: background 0.4s, box-shadow 0.4s;
+}
+.dark .main-content {
+  background: rgba(35, 41, 70, 0.92);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1);
+}
+
+/* 2. Card Styles: Glass, Glow, and Hover Animations */
+.card,
+.stats-card,
+.workout-card,
+.add-modal-card,
+.blog-card,
+.tutorial-card,
+.contact-form {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  padding: 2rem 1.5rem;
+  margin-bottom: 2rem;
+  transition: transform 0.18s, box-shadow 0.18s, background 0.4s;
+  border: none;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover,
+.stats-card:hover,
+.workout-card:hover,
+.add-modal-card:hover,
+.blog-card:hover,
+.tutorial-card:hover,
+.contact-form:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(16, 185, 129, 0.18), 0 0 0 4px #f59e0b22;
+  background: rgba(245, 245, 255, 0.98);
+}
+.dark .card,
+.dark .stats-card,
+.dark .workout-card,
+.dark .add-modal-card,
+.dark .blog-card,
+.dark .tutorial-card,
+.dark .contact-form {
+  background: rgba(35, 41, 70, 0.98);
+  color: #f4f4f4;
+}
+
+/* 3. AddWorkout Modal: Modern Form */
+.add-modal-card {
+  background: linear-gradient(120deg, #f3f4f6 60%, #e0e7ff 100%);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18);
+  padding: 2rem;
+  width: 95vw;
+  max-width: 420px;
+  animation: fadeIn 0.7s;
+}
+.dark .add-modal-card {
+  background: linear-gradient(120deg, #232946 60%, #232946 100%);
+  color: #f4f4f4;
+}
+
+/* 4. Inputs & Selects: Soft, Modern, Focused */
+input,
+select,
+textarea {
+  border-radius: 0.75rem;
+  border: 1.5px solid #c7d2fe;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  background: #fff;
+  color: #22223b;
+  transition: border 0.2s, background 0.2s;
+  font-size: 1rem;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #6366f1;
+  background: #f0fdfa;
+  outline: none;
+  box-shadow: 0 0 0 2px #10b98144;
+}
+.dark input,
+.dark select,
+.dark textarea {
+  background: #232946;
+  color: #f4f4f4;
+  border-color: #6366f1;
+}
+
+/* 5. Buttons: Gradient, Glow, and Bounce */
+button,
+.add-workout-btn {
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+  outline: none;
+  box-shadow: 0 2px 8px #7c3aed22;
+}
+button:focus,
+.add-workout-btn:focus {
+  outline: 2px solid #6366f1;
+}
+button:hover,
+.add-workout-btn:hover {
+  background: linear-gradient(90deg, #6366f1 60%, #10b981 100%);
+  color: #fff;
+  transform: scale(1.07) translateY(-2px);
+  box-shadow: 0 4px 16px #f59e0b44;
+}
+
+/* 6. Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.95);
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.animate-pop {
+  animation: pop 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-slideInRight {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* 7. Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #e0e7ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #a5b4fc;
+  border-radius: 8px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #6366f1;
+}
+
+/* 8. Responsive Tweaks */
+@media (max-width: 600px) {
+  .main-content {
+    padding: 1rem 0.25rem;
+    border-radius: 1rem;
+  }
+  .card,
+  .stats-card,
+  .workout-card,
+  .add-modal-card,
+  .blog-card,
+  .tutorial-card,
+  .contact-form {
+    padding: 1.2rem 0.7rem;
+    border-radius: 1rem;
+  }
+}
+
+/* 9. More Colorful Gradients for Cards */
+.stats-card {
+  background: linear-gradient(120deg, #f59e0b 0%, #10b981 100%);
+  color: var(--white);
+  border-left: 6px solid var(--primary);
+}
+.stats-card:hover {
+  background: linear-gradient(120deg, #10b981 0%, #f59e0b 100%);
+  color: #fff;
+}
+
+/* 10. Utility: Glass Shine Effect */
+.card::after,
+.stats-card::after,
+.workout-card::after,
+.blog-card::after,
+.tutorial-card::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -40%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 60%, #fff8 100%);
+  opacity: 0.15;
+  transform: rotate(8deg);
+}
+
+/* 11. Dashboard Chart Card: Glass & Glow */
+.bg-white.p-6.rounded-lg.shadow-md {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 8px 32px #7c3aed22 !important;
+  transition: box-shadow 0.2s;
+}
+.bg-white.p-6.rounded-lg.shadow-md:hover {
+  box-shadow: 0 12px 40px #10b98133 !important;
+}
+
+/* 12. Add a little bounce to modal open */
+.add-modal-card {
+  animation: pop 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+/* 13. Add a subtle pulse to the add button */
+.add-workout-btn {
+  animation: pulse 2.5s infinite;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 #10b98144;
+  }
+  50% {
+    box-shadow: 0 0 0 12px #10b98122;
+  }
+}
+
+/* Add at the end or after your .navbar styles */
+.glassy-navbar {
+  background: linear-gradient(90deg, #7c3aedcc 0%, #10b981cc 100%);
+  box-shadow: 0 8px 32px 0 rgba(124, 58, 237, 0.18);
+  backdrop-filter: blur(12px) saturate(1.5);
+  border-bottom: 3px solid #f59e0b;
+  height: var(--navbar-height);
+  z-index: 1000;
+  animation: navbarFadeIn 0.7s;
+}
+.nav-link {
+  letter-spacing: 0.02em;
+  font-size: 1.08rem;
+}
+
+/* Additional Styles */
+@media (max-width: 1200px) {
+  .main-content,
+  .container {
+    max-width: 100vw;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    padding: 1rem 0.5rem;
+    border-radius: 1rem;
+  }
+}
+
+.nav-link,
+.modern-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(90deg, var(--primary) 60%, var(--secondary) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #7c3aed22;
+  transition: background 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+  outline: none;
+  margin: 0 0.25rem;
+}
+.nav-link:hover,
+.modern-btn:hover,
+.modern-btn:focus {
+  background: linear-gradient(90deg, var(--accent) 60%, var(--secondary) 100%);
+  color: #fff;
+  transform: scale(1.07) translateY(-2px);
+  box-shadow: 0 4px 16px #f59e0b44;
+}
+.nav-link.active {
+  background: linear-gradient(90deg, var(--accent) 60%, var(--secondary) 100%);
+  color: var(--primary);
+  box-shadow: 0 2px 12px #f59e0b33;
+  transform: scale(1.08) translateX(10px);
+}
+
+.pagination {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+.pagination .modern-btn {
+  min-width: 44px;
+  justify-content: center;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.1rem;
+}
+.pagination .modern-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #e5e7eb;
+  color: #a1a1aa;
+  box-shadow: none;
+}
+.pagination .page-indicator {
+  background: #fff;
+  color: var(--primary);
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: 2px solid var(--accent);
+  margin: 0 0.25rem;
+}
+
+@media (min-width: 1200px) {
+  .main-content {
+    min-width: 1200px;
+    max-width: 1600px;
+    width: 95vw;
+  }
+  .blogs-grid,
+  .tutorials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .blogs-grid,
+  .tutorials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.calendar-container {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  padding: 2rem 1.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  margin-right: 2rem;
+  margin-bottom: 2rem;
+}
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem;
+}
+.calendar-date {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: var(--primary);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, color 0.2s;
+}
+.calendar-date.selected,
+.calendar-date.has-workout {
+  background: var(--accent);
+  color: #fff;
+}
+.calendar-date.selected {
+  border: 2px solid var(--primary);
+}
+.calendar-date:disabled {
+  background: transparent;
+  color: #d1d5db;
+  cursor: default;
+}
+
+.ai-recommendations {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(124, 58, 237, 0.1);
+  padding: 2rem 1.5rem;
+  min-width: 320px;
+  max-width: 400px;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+}
+.ai-recommendations h2 {
+  color: var(--primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.ai-recommendations .workout-card {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1200px) {
+  .calendar-container,
+  .ai-recommendations {
+    min-width: 100%;
+    max-width: 100%;
+    margin: 0 0 2rem 0;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #e0e7ff;
+}
+::-webkit-scrollbar-thumb {
+  background: #a5b4fc;
+  border-radius: 8px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #6366f1;
+}
+
+/* --- Navbar Active/Inactive Tab Styles --- */
+.nav-link,
+.inactive-tab {
+  background: transparent;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+  outline: none;
+  margin: 0 0.25rem;
+  border: none;
+  box-shadow: none;
+}
+
+.active-tab {
+  background: linear-gradient(90deg, #f59e0b 60%, #10b981 100%);
+  color: #232946 !important;
+  box-shadow: 0 2px 12px #f59e0b33;
+  transform: scale(1.08) translateX(10px);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s, transform 0.18s, box-shadow 0.2s;
+}
+
+.inactive-tab:hover,
+.nav-link:hover {
+  background: #fff;
+  color: #7c3aed;
+  transform: scale(1.08);
+}
+
+/* Responsive Navbar */
+@media (max-width: 1024px) {
+  .navbar .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .navbar ul {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navbar .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  .navbar ul {
+    display: flex !important;
+  }
+}
+
+/* Hamburger menu slide-in animation */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+.animate-slideInRight {
+  animation: slideInRight 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
