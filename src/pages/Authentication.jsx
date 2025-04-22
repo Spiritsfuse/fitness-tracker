@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
+// Authentication page: handles both sign up and sign in forms
 const Authentication = () => {
   const { signup, signin } = useContext(AuthContext);
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false); // Toggle between sign up/in
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -12,19 +13,21 @@ const Authentication = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Handle form submit for sign up or sign in
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
       if (isSignUp) {
+        // Validate name for sign up
         if (!formData.name.trim()) {
           setError("Full name is required.");
           setLoading(false);
           return;
         }
         await signup(formData.email, formData.password);
-        // Store full name in localStorage under email
+        // Stores full name in localStorage and sessionStorage
         localStorage.setItem(
           `user_fullname_${formData.email}`,
           formData.name.trim()
@@ -50,6 +53,7 @@ const Authentication = () => {
       <div className="auth-card">
         <h2>{isSignUp ? "Sign Up" : "Sign In"}</h2>
         <form onSubmit={handleSubmit}>
+          {/* Show name field only for sign up */}
           {isSignUp && (
             <input
               type="text"

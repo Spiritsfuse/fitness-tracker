@@ -1,18 +1,21 @@
 import React, { useEffect, useState } from "react";
 
+// YouTube Data API key from environment
 const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 const MAX_RESULTS = 6;
 
+// Tutorials page: search and display fitness YouTube videos
 const Tutorials = () => {
   const [tutorials, setTutorials] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [query, setQuery] = useState("fitness workouts");
+  const [query, setQuery] = useState("fitness workouts"); // Default search
   const [search, setSearch] = useState("");
   const [pageToken, setPageToken] = useState("");
   const [nextPageToken, setNextPageToken] = useState("");
   const [pageHistory, setPageHistory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Fetch tutorials from YouTube API
   const fetchTutorials = async (q = query, token = "") => {
     setLoading(true);
     const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
@@ -27,10 +30,12 @@ const Tutorials = () => {
     setLoading(false);
   };
 
+  // Initial fetch on mount
   useEffect(() => {
     fetchTutorials();
   }, []);
 
+  // Handle search form submit
   const handleSearch = (e) => {
     e.preventDefault();
     setPageHistory([]);
@@ -40,6 +45,7 @@ const Tutorials = () => {
     setPageToken("");
   };
 
+  // Pagination: next page
   const handleNext = () => {
     setPageHistory((h) => [...h, pageToken]);
     setPageToken(nextPageToken);
@@ -47,6 +53,7 @@ const Tutorials = () => {
     fetchTutorials(query, nextPageToken);
   };
 
+  // Pagination: previous page
   const handlePrev = () => {
     const prevHistory = [...pageHistory];
     const prevToken = prevHistory.pop();
@@ -56,6 +63,7 @@ const Tutorials = () => {
     fetchTutorials(query, prevToken || "");
   };
 
+  // Go to first page
   const goToFirst = () => {
     setPageHistory([]);
     setPageToken("");
@@ -66,6 +74,7 @@ const Tutorials = () => {
   return (
     <div className="main-content">
       <h1 className="dashboard-header">Tutorials</h1>
+      {/* Search bar */}
       <form onSubmit={handleSearch} className="mb-6 flex gap-2">
         <input
           type="text"
@@ -79,12 +88,14 @@ const Tutorials = () => {
           Search
         </button>
       </form>
+      {/* Loading spinner */}
       {loading ? (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <>
+          {/* Tutorials grid */}
           <div className="tutorials-grid">
             {tutorials.map((tutorial) => (
               <div key={tutorial.id.videoId} className="tutorial-card">
@@ -104,6 +115,7 @@ const Tutorials = () => {
               </div>
             ))}
           </div>
+          {/* Pagination controls */}
           <div className="pagination">
             <button
               onClick={goToFirst}

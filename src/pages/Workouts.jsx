@@ -2,15 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import WorkoutCard from "../components/WorkoutCard";
 
-// Calendar component
+// Calendar component for selecting workout dates
 function Calendar({ selectedDate, onSelect, workoutDates }) {
   const today = new Date();
   const [month, setMonth] = useState(today.getMonth());
   const [year, setYear] = useState(today.getFullYear());
 
+  // Calculate days in current month and first day of week
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDay = new Date(year, month, 1).getDay();
 
+  // Handlers for navigating months
   const handlePrev = () => {
     if (month === 0) {
       setMonth(11);
@@ -28,11 +30,12 @@ function Calendar({ selectedDate, onSelect, workoutDates }) {
     }
   };
 
+  // Build days array for calendar grid
   const days = [];
   for (let i = 0; i < firstDay; i++) days.push(null);
   for (let d = 1; d <= daysInMonth; d++) days.push(d);
 
-  // Set of date strings with workouts
+  // Set of date strings with workouts for highlighting
   const workoutSet = new Set(
     workoutDates.map(
       (d) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
@@ -60,6 +63,7 @@ function Calendar({ selectedDate, onSelect, workoutDates }) {
       </div>
       <div className="calendar-dates">
         {days.map((d, i) => {
+          // Highlight selected and workout days
           const isSelected =
             d &&
             selectedDate.getDate() === d &&
@@ -85,7 +89,7 @@ function Calendar({ selectedDate, onSelect, workoutDates }) {
   );
 }
 
-// Helper: get date key as YYYY-M-D
+// Helper to get date key for localStorage
 function getDateKey(date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
@@ -108,14 +112,13 @@ const Workouts = () => {
     setLoading(false);
   }, [currentUser, selectedDate]);
 
-  // Get all workout dates for calendar (for this user)
+  // Gather all workout dates for this user (for calendar highlights)
   const workoutDates = [];
   if (currentUser) {
     const email = currentUser.email;
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
       if (k.startsWith(`workouts_${email}_`)) {
-        // Extract date part
         const parts = k.split("_");
         const dateStr = parts.slice(2).join("_");
         const [y, m, d] = dateStr.split("-").map(Number);
@@ -126,6 +129,7 @@ const Workouts = () => {
     }
   }
 
+  // Show loading spinner while fetching
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen main-content">
@@ -136,6 +140,7 @@ const Workouts = () => {
 
   return (
     <div className="main-content flex flex-col md:flex-row gap-8">
+      {/* Calendar for selecting workout date */}
       <Calendar
         selectedDate={selectedDate}
         onSelect={setSelectedDate}

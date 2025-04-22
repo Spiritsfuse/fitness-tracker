@@ -1,5 +1,7 @@
-// Main App component that handles routing and authentication context.
-// Wraps the application with ThemeProvider and AuthProvider for global state management.
+// Main App component: handles global providers and all routing for the app.
+// Wraps the app with ThemeProvider and AuthProvider for global state.
+// Shows either the authenticated app or the authentication page based on login state.
+
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider, AuthContext } from "./contexts/AuthContext";
@@ -15,16 +17,18 @@ import "./App.css";
 
 const App = () => {
   return (
+    // Provide theme context (dark/light mode) to the entire app
     <ThemeProvider>
+      {/* Provide authentication context (user, login, logout) */}
       <AuthProvider>
         <BrowserRouter>
-          {/* Consuming AuthContext to determine if the user is logged in */}
+          {/* Use AuthContext to determine if user is logged in */}
           <AuthContext.Consumer>
             {({ currentUser }) => (
               <div className="flex flex-col min-h-screen">
                 {currentUser ? (
+                  // If authenticated, show the main app with navigation and routes
                   <>
-                    {/* Render Navbar and authenticated routes */}
                     <Navbar />
                     <Routes>
                       <Route path="/" element={<Dashboard />} />
@@ -35,7 +39,7 @@ const App = () => {
                     </Routes>
                   </>
                 ) : (
-                  // Redirect to Authentication page if not logged in
+                  // If not authenticated, show only the authentication page
                   <Routes>
                     <Route path="*" element={<Authentication />} />
                   </Routes>

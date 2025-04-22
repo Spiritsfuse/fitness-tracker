@@ -16,7 +16,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -27,14 +26,14 @@ ChartJS.register(
   Legend
 );
 
-// Helper function to get today's date key
+// Helper to get today's date key for localStorage
 function getTodayKey() {
   const d = new Date();
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
 
+// Helper to get user email from Firebase Auth (localStorage)
 function getUserEmail() {
-  // Get current user email from Firebase Auth
   const user = JSON.parse(localStorage.getItem("firebase:authUser:")) || {};
   return user.email || "";
 }
@@ -45,7 +44,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [quote, setQuote] = useState("");
 
-  // Get user email
   const userEmail = currentUser?.email;
 
   // Fetch today's workouts from localStorage
@@ -60,11 +58,10 @@ const Dashboard = () => {
     setLoading(false);
   }, [userEmail]);
 
-  // Fetch random quote from ZenQuotes API (with CORS proxy fallback)
+  // Fetch a random motivational quote from ZenQuotes API (with CORS proxy)
   useEffect(() => {
     const fetchQuote = async () => {
       try {
-        // Use a public CORS proxy
         const res = await fetch(
           "https://api.allorigins.win/get?url=" +
             encodeURIComponent("https://zenquotes.io/api/random")
@@ -79,7 +76,7 @@ const Dashboard = () => {
     fetchQuote();
   }, []);
 
-  // Add new workout to localStorage
+  // Add a new workout to localStorage and update state
   const addNewWorkout = (workout) => {
     const todayKey = getTodayKey();
     const key = `workouts_${userEmail}_${todayKey}`;
@@ -87,14 +84,13 @@ const Dashboard = () => {
     const newArr = [workout, ...prev];
     localStorage.setItem(key, JSON.stringify(newArr));
     setWorkouts(newArr);
-    return Promise.resolve(); // for modal close
+    return Promise.resolve();
   };
 
-  // Chart Data (all workouts for this user, all dates)
+  // Gather all workouts for this user (for analytics/charts)
   const [allWorkouts, setAllWorkouts] = useState([]);
   useEffect(() => {
     if (!userEmail) return;
-    // Gather all workouts for this user from localStorage
     const all = [];
     Object.keys(localStorage).forEach((k) => {
       if (k.startsWith(`workouts_${userEmail}_`)) {
@@ -105,7 +101,7 @@ const Dashboard = () => {
     setAllWorkouts(all);
   }, [userEmail, workouts]);
 
-  // Chart: Calories per session
+  // Chart.js data for calories burned per workout
   const chartData = {
     labels: allWorkouts.map((w, i) => w.workoutName || `Workout ${i + 1}`),
     datasets: [
@@ -122,7 +118,7 @@ const Dashboard = () => {
     ],
   };
 
-  // Pie: Category breakdown
+  // Pie chart data: count of workouts by category
   const categoryCounts = allWorkouts.reduce((acc, w) => {
     const category = w.category || "Uncategorized";
     acc[category] = (acc[category] || 0) + 1;
@@ -146,6 +142,7 @@ const Dashboard = () => {
     ],
   };
 
+  // Show spinner when loading/fetching the data:
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen main-content">
@@ -156,7 +153,6 @@ const Dashboard = () => {
 
   return (
     <div className="main-content grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {/* Left: Today's Workouts + AddWorkout */}
       <div className="flex flex-col gap-6">
         <div className="card">
           <h2 className="text-xl font-bold text-primary mb-4">
@@ -173,7 +169,6 @@ const Dashboard = () => {
         </div>
         <AddWorkout addNewWorkout={addNewWorkout} />
       </div>
-      {/* Right: Charts + Quote */}
       <div className="flex flex-col gap-6">
         <div className="card">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -191,8 +186,8 @@ const Dashboard = () => {
                 height={180}
               />
             </div>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <div style={{ height: 220 }}>
               <h3 className="text-lg font-semibold text-primary mb-2">
                 Workout Categories

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaPlus, FaTimes } from "react-icons/fa";
 
+// List of workout categories for the dropdown
 const categories = [
   "Chest",
   "Back",
@@ -12,9 +13,10 @@ const categories = [
   "Other",
 ];
 
+// Floating button and modal form to add a new workout
 export default function AddWorkout({ addNewWorkout }) {
-  const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false); // Modal open/close state
+  const [loading, setLoading] = useState(false); // Loading state for submit
   const [form, setForm] = useState({
     category: "",
     workoutName: "",
@@ -24,12 +26,15 @@ export default function AddWorkout({ addNewWorkout }) {
     duration: "",
   });
 
+  // Handle input changes for form fields
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Handle form submission
   const submit = async (e) => {
     e.preventDefault();
+    // Basic validation: all fields required
     if (
       !form.category ||
       !form.workoutName ||

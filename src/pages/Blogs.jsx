@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 
+// Number of blogs per page
 const PER_PAGE = 6;
 
+// Blogs page: fetch and display fitness articles from Dev.to API
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
+  // Fetch blogs from Dev.to API when page changes
   useEffect(() => {
     setLoading(true);
     fetch(
@@ -23,12 +26,14 @@ const Blogs = () => {
   return (
     <div className="main-content">
       <h1 className="dashboard-header">Blogs</h1>
+      {/* Loading spinner */}
       {loading ? (
         <div className="flex items-center justify-center min-h-[200px]">
           <div className="w-16 h-16 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
         </div>
       ) : (
         <>
+          {/* Blogs grid */}
           <div className="blogs-grid">
             {blogs.map((blog) => (
               <div key={blog.id} className="blog-card">
@@ -45,6 +50,7 @@ const Blogs = () => {
               </div>
             ))}
           </div>
+          {/* Pagination controls */}
           <div className="pagination">
             <button
               onClick={() => setPage(1)}

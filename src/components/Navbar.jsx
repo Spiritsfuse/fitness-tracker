@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { FaBars, FaSignOutAlt, FaTimes, FaMoon, FaSun } from "react-icons/fa";
 
+// Navigation links for the main app sections
 const navLinks = [
   { to: "/", label: "Dashboard" },
   { to: "/workouts", label: "Workouts" },
@@ -12,6 +13,7 @@ const navLinks = [
   { to: "/contact", label: "Contact" },
 ];
 
+// Helper to get user initials for avatar circle
 function getInitials(name) {
   if (!name) return "U";
   const parts = name.trim().split(" ");
@@ -20,11 +22,14 @@ function getInitials(name) {
 }
 
 const Navbar = () => {
+  // Auth and theme context hooks
   const { currentUser, logout } = useContext(AuthContext);
   const { theme, toggleTheme } = useContext(ThemeContext);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Get full name from sessionStorage/localStorage
+  // State for mobile menu open/close
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Get user's full name from session/local storage for avatar
   const [fullName] = useState(() => {
     let name = sessionStorage.getItem("user_fullname");
     if (!name && currentUser?.email) {
@@ -34,10 +39,10 @@ const Navbar = () => {
     return name || "";
   });
 
-  // Responsive Navbar
   return (
-    <nav className="navbar glassy-navbar">
+    <nav className="navbar">
       <div className="container flex items-center justify-between w-full">
+        {/* Logo and app name */}
         <Link to="/" className="logo flex items-center gap-2">
           <img
             src="/fitness-tracker-logo.png"
@@ -49,7 +54,7 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop navigation links */}
         <ul className="hidden lg:flex items-center gap-6 mx-auto">
           {navLinks.map((item) => (
             <li key={item.to}>
@@ -67,98 +72,84 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Right: Theme + User + Hamburger */}
-        <div className="flex items-center gap-3">
+        {/* Right section: theme toggle, user avatar, sign out, mobile menu */}
+        <div className="flex items-center gap-4">
+          {/* Theme toggle button */}
           <button
             onClick={toggleTheme}
-            className="darkmode-btn"
+            className="darkmode-btn flex items-center justify-center"
             title="Toggle dark mode"
             aria-label="Toggle dark mode"
           >
-            {theme === "dark" ? <FaSun size={22} /> : <FaMoon size={22} />}
+            {theme === "dark" ? <FaSun size={20} /> : <FaMoon size={20} />}
           </button>
-          <span className="hidden lg:flex items-center justify-center bg-accent text-white font-bold rounded-full w-10 h-10 text-lg uppercase shadow-md">
-            {getInitials(fullName)}
-          </span>
-          <FaSignOutAlt
+
+          {/* User initials avatar */}
+          <div className="user-initials">{getInitials(fullName)}</div>
+
+          {/* Desktop sign out button */}
+          <button
             onClick={() => {
               logout();
               sessionStorage.removeItem("user_fullname");
             }}
-            className="hidden lg:block text-xl cursor-pointer hover:text-accent transition-transform duration-300 transform hover:scale-125"
-            title="Logout"
-            tabIndex={0}
+            className="signOutBtn lg:flex items-center bg-gradient-to-r from-accent to-primary text-white rounded-full text-xl font-bold gap-2 shadow-lg hover:scale-110 hover:from-red-500 hover:to-red-700 transition-all"
             aria-label="Logout"
-          />
-          {/* Hamburger */}
-          <button
-            className="lg:hidden ml-2 p-3 rounded-full bg-gradient-to-br from-primary to-accent shadow-lg border-2 border-accent focus:outline-none focus:ring-2 focus:ring-accent"
-            onClick={() => setMobileOpen((prev) => !prev)}
-            aria-label="Open navigation menu"
-            style={{ zIndex: 1001 }}
+            style={{ fontSize: 28, border: "none", marginLeft: "1rem" }}
           >
-            {mobileOpen ? (
-              <FaTimes className="text-3xl text-white" />
+            <FaSignOutAlt className="text-2xl" />
+          </button>
+
+          {/* Hamburger menu for mobile */}
+          <button
+            className="mobile-menu-button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+          >
+            {mobileMenuOpen ? (
+              <FaTimes className="icon" />
             ) : (
-              <FaBars className="text-3xl text-white" />
+              <FaBars className="icon" />
             )}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      {mobileOpen && (
-        <div className="fixed inset-0 z-[1000] bg-black/70 backdrop-blur-sm flex flex-col justify-end lg:hidden transition-all duration-300">
-          <div className="w-full h-[70vh] bg-gradient-to-b from-primary via-secondary to-accent shadow-2xl rounded-t-3xl p-8 flex flex-col gap-8 animate-slideInRight border-t-4 border-accent/80 relative">
-            <button
-              className="absolute top-4 right-4 bg-white/90 text-accent rounded-full p-3 shadow-lg border-2 border-accent focus:outline-none focus:ring-2 focus:ring-accent"
-              onClick={() => setMobileOpen(false)}
-              aria-label="Close navigation menu"
-              style={{ zIndex: 1001 }}
-            >
-              <FaTimes className="text-3xl" />
-            </button>
-            <div className="flex flex-col gap-6 mt-12">
-              {navLinks.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  className={({ isActive }) =>
-                    `w-full text-center py-4 rounded-2xl font-bold text-xl shadow-lg transition-all duration-200 ${
-                      isActive
-                        ? "bg-white text-primary scale-105"
-                        : "bg-white/20 text-white hover:bg-white/40 hover:text-primary"
-                    }`
-                  }
-                  style={{
-                    letterSpacing: "0.04em",
-                  }}
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-            </div>
-            <div className="flex items-center gap-3 mt-auto justify-center">
-              <span className="flex items-center justify-center bg-accent text-white font-bold rounded-full w-12 h-12 text-xl uppercase shadow-md">
-                {getInitials(fullName)}
-              </span>
-              <button
-                onClick={() => {
-                  logout();
-                  sessionStorage.removeItem("user_fullname");
-                }}
-                className="bg-white/90 text-accent rounded-full p-3 shadow-lg border-2 border-accent hover:bg-accent hover:text-white transition"
-                title="Logout"
-                tabIndex={0}
-                aria-label="Logout"
+      {/* Mobile menu overlay and drawer */}
+      <div
+        className={`mobile-menu-backdrop ${mobileMenuOpen ? "active" : ""}`}
+        onClick={() => setMobileMenuOpen(false)}
+      >
+        {/* Slide-out mobile navigation */}
+        <div className={`mobile-nav-menu ${mobileMenuOpen ? "open" : ""}`}>
+          <nav className="mobile-nav-links">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `mobile-nav-link ${isActive ? "active" : ""}`
+                }
+                onClick={() => setMobileMenuOpen(false)}
               >
-                <FaSignOutAlt className="text-2xl" />
-              </button>
-            </div>
-          </div>
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+
+          {/* Mobile sign out button */}
+          <button
+            className="sign-out-button"
+            onClick={() => {
+              logout();
+              sessionStorage.removeItem("user_fullname");
+            }}
+          >
+            <FaSignOutAlt className="text-xl" />
+            Sign Out
+          </button>
         </div>
-      )}
+      </div>
     </nav>
   );
 };
